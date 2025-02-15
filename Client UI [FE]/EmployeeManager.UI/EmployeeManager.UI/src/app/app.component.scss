@@ -1,0 +1,109 @@
+.navbar-brand {
+    color: rgba(250, 250, 8, 0.948);
+}
+
+.nav-link:hover {
+    color: rgba(250, 250, 8, 0.948);
+    background-color: rgba(128, 128, 128, 0.345);
+}
+
+.live-date {
+    margin-left: 510px;
+    margin-top: 10px;
+    color: white;
+    position: absolute;
+    font-weight: bold;
+}
+
+.btn {
+    margin-left: auto;
+    position: absolute;
+    right: 25px;
+    margin-top: 2px;
+    height: 35px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#backBtn:hover {
+    background-color: rgb(200, 200, 200);
+}
+
+@media (max-width: 1200px) {
+    .live-date {
+        margin-left: 30px;
+    }
+
+    .btn {
+        right: 10px;
+    }
+}
+
+@media (max-width: 992px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .live-date {
+        margin-left: 0;
+        margin-top: 0;
+        position: static;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .btn {
+        right: 0;
+        position: relative;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .nav-item {
+        margin-bottom: 10px;
+    }
+
+    .live-date {
+        font-size: 12px;
+        margin-left: 0;
+        margin-top: 10px;
+        position: static;
+        text-align: center;
+    }
+
+    .btn {
+        right: 0;
+        position: relative;
+        margin-top: 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 0.9rem;
+    }
+
+    .nav-item {
+        margin-bottom: 8px;
+    }
+
+    .live-date {
+        font-size: 10px;
+    }
+
+    .btn {
+        font-size: 12px;
+        height: 30px;
+    }
+}

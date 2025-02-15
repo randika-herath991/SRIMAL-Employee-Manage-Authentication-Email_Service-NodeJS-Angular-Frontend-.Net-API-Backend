@@ -1,0 +1,145 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url('https://cdn.prod.website-files.com/620c0d2e51cac37f5958848f/62169f00a05c45771b9156d9_202202_23-AutomationAlley-Graphics-STEPS%20ENTERPRISES%20CAN%20TAKE.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.login-form {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 100%;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+}
+
+.form-group fa-icon {
+  margin-right: 8px;
+}
+
+.password-icon {
+  cursor: pointer;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.forgot-password-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+@media (max-width: 768px) {
+  .login-form {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+
+  .form-control {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .login-title {
+    font-size: 18px;
+  }
+
+  .form-control {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 320px) {
+  .login-form {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .login-title {
+    font-size: 16px;
+  }
+
+  .form-control {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .forgot-password-link a {
+    font-size: 12px;
+  }
+}

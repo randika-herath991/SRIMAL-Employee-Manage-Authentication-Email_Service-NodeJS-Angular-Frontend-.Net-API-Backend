@@ -1,0 +1,200 @@
+<div class="col">
+  <div class="row-6">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
+      data-bs-pause="false">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img
+            src="https://imageio.forbes.com/specials-images/imageserve/5eff47d29756420007f6f684/Paperwork-and-hands-on-a-board-room-table-at-a-business-presentation-or-seminar-/960x0.jpg?format=jpg&width=960"
+            class="d-block w-100" alt="Slide-1">
+        </div>
+        <div class="carousel-item">
+          <img src="https://nuvsmart.com/wp-content/uploads/2019/04/img-portfolio-03.jpg" class="d-block w-100"
+            alt="Slide-2">
+        </div>
+        <div class="carousel-item">
+          <img src="https://blog.mycorporation.com/wp-content/uploads/2018/01/management_employee.jpg"
+            class="d-block w-100" alt="Slide-3">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev"
+        aria-label="Previous Slide">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next"
+        aria-label="Next Slide">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="row my-4 text-center">
+    <button class="btn btn-secondary btn-sm" (click)="printEmployeeData()">
+      <fa-icon [icon]="faPrint"></fa-icon> Print Employee Details
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-danger btn-sm pdf" (click)="exportToPDF()">
+      <fa-icon [icon]="faFilePdf"></fa-icon> Export to PDF
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-primary btn-sm word" (click)="exportToWord()">
+      <fa-icon [icon]="faFileWord"></fa-icon> Export to Word
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-success btn-sm excel" (click)="exportToExcel()">
+      <fa-icon [icon]="faFileExcel"></fa-icon> Export to Excel
+    </button>
+  </div>
+
+  <div class="container my-5 table-responsive">
+    <h1 class="mb-3">Employees Details</h1>
+    <div *ngIf="loading" class="text-center my-4">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="row-6 scrollable-body">
+      <table class="table table-bordered table-hover" id="employeeTable">
+        <thead class="table-primary">
+          <tr>
+            <th>ID
+              <fa-icon class="filter-icon" [icon]="faFilter" (click)="toggleFilter('id')"></fa-icon>
+              <input *ngIf="filters['id'] !== undefined" [(ngModel)]="filters['id']" (input)="applyFilter()"
+                class="filter-input" placeholder="Search by ID" />
+            </th>
+            <th>Name
+              <fa-icon class="filter-icon" [icon]="faFilter" (click)="toggleFilter('name')"></fa-icon>
+              <input *ngIf="filters['name'] !== undefined" [(ngModel)]="filters['name']" (input)="applyFilter()"
+                class="filter-input" placeholder="Enter name to filter" />
+            </th>
+            <th>Email
+              <fa-icon class="filter-icon" [icon]="faFilter" (click)="toggleFilter('email')"></fa-icon>
+              <input *ngIf="filters['email'] !== undefined" [(ngModel)]="filters['email']" (input)="applyFilter()"
+                class="filter-input" placeholder="Filter by email" [pattern]="emailPattern" />
+              <small *ngIf="emailError" class="text-danger">Invalid email format</small>
+            </th>
+            <th>Phone
+              <fa-icon class="filter-icon" [icon]="faFilter" (click)="toggleFilter('phone')"></fa-icon>
+              <input *ngIf="filters['phone'] !== undefined" [(ngModel)]="filters['phone']" (input)="applyFilter()"
+                class="filter-input" placeholder="Search by phone" [pattern]="phonePattern" />
+              <small *ngIf="phoneError" class="text-danger">Invalid phone number</small>
+            </th>
+            <th>Salary
+              <fa-icon class="filter-icon" [icon]="faFilter" (click)="toggleFilter('salary')"></fa-icon>
+              <input *ngIf="filters['salary'] !== undefined" [(ngModel)]="filters['salary']" (input)="applyFilter()"
+                class="filter-input" placeholder="Filter by salary" [pattern]="salaryPattern" />
+              <small *ngIf="salaryError" class="text-danger">Please enter number</small>
+            </th>
+            <th>Department
+              <fa-icon class="filter-icon" [icon]="faFilter" (click)="toggleFilter('department')"></fa-icon>
+              <input *ngIf="filters['department'] !== undefined" [(ngModel)]="filters['department']"
+                (input)="applyFilter()" class="filter-input" placeholder="Search by department" />
+            </th>
+            <th>Status
+              <fa-icon class="filter-icon" [icon]="faFilter" (click)="toggleFilter('status')"></fa-icon>
+              <select *ngIf="filters['status'] !== undefined" [(ngModel)]="filters['status']" (change)="applyFilter()"
+                class="filter-input">
+                <option value="">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of paginatedEmployees">
+            <td> {{ employee.id }} </td>
+            <td> {{ employee.name }} </td>
+            <td> {{ employee.email }} </td>
+            <td> {{ formatPhoneNumber(employee.phone) }} </td>
+            <td> {{ employee.salary }} </td>
+            <td> {{ employee.department }} </td>
+            <td>
+              <span class="badge" [ngClass]="employee.isActive ? 'bg-success' : 'bg-danger'">
+                {{ employee.isActive ? 'Active' : 'Inactive' }}
+              </span>
+              <button (click)="toggleEmployeeStatus(employee)" class="btn btn-sm btn-outline-secondary ms-2">
+                <fa-icon [icon]="employee.isActive ? faUserSlash : faUserCheck"></fa-icon>
+              </button>
+            </td>
+            <td><a [routerLink]="['/employees', 'edit', employee.id]">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p *ngIf="!filteredEmployees || filteredEmployees.length <= 0" class="text-center">
+        <fa-icon [icon]="faExclamationCircle"></fa-icon> No Employees Found
+      </p>
+
+      <div class="pagination-container text-center my-4">
+        <button (click)="goToPage(page)" *ngFor="let page of pages" class="btn btn-primary"
+          [class.active]="currentPage === page">
+          {{ page }}
+        </button>
+      </div>
+    </div>
+
+    <div class="charts-container my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <kendo-chart [categoryAxis]="{ categories: departmentCategories }">
+            <kendo-chart-title text="Employee Salary Distribution by Department"></kendo-chart-title>
+            <kendo-chart-series>
+              <kendo-chart-series-item *ngFor="let item of salaryChartData" [data]="item.data" [name]="item.name"
+                type="column">
+              </kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+        </div>
+
+        <div class="col-md-6">
+          <kendo-chart>
+            <kendo-chart-title text="Employee Distribution by Department"></kendo-chart-title>
+            <kendo-chart-series>
+              <kendo-chart-series-item *ngFor="let item of departmentChartData" [data]="item.data" [name]="item.name">
+              </kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <kendo-chart>
+          <kendo-chart-series>
+            <kendo-chart-series-item type="donut" [data]="data" categoryField="kind" field="share">
+              <kendo-chart-series-item-labels [content]="labelContent" color="#fff" background="none">
+              </kendo-chart-series-item-labels>
+            </kendo-chart-series-item>
+          </kendo-chart-series>
+          <kendo-chart-title text="Employee Distribution by Department"></kendo-chart-title>
+          <kendo-chart-legend [visible]="true"></kendo-chart-legend>
+        </kendo-chart>
+      </div>
+
+      <div class="col-md-6">
+        <kendo-chart>
+          <kendo-chart-series>
+            <kendo-chart-series-item type="donut" [data]="salaryData" categoryField="kind" field="share">
+              <kendo-chart-series-item-labels [content]="labelContentWithPercentage" color="#fff" background="none">
+              </kendo-chart-series-item-labels>
+            </kendo-chart-series-item>
+          </kendo-chart-series>
+          <kendo-chart-title text="Employee Salary Distribution by Department"></kendo-chart-title>
+          <kendo-chart-legend [visible]="true"></kendo-chart-legend>
+        </kendo-chart>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer mt-auto py-3 bg-light">
+  <div class="container">
+    <span class="text-muted">&#64; 2024 | SRIMAL Employee Management System | All Rights Reserved.</span>
+  </div>
+</footer>

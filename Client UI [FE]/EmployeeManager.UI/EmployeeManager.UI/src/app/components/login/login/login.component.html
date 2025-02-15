@@ -1,0 +1,51 @@
+<div class="login-container">
+  <div class="login-form">
+    <h2 class="login-title"> <img src="assets/favicon.ico" alt="Favicon"
+        style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;" /> SRIMAL Employees Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label for="email">
+          <fa-icon [icon]="faEnvelope"></fa-icon> Email
+        </label>
+        <input type="email" id="adminEmail" formControlName="adminEmail" class="form-control"
+          placeholder="Enter your email" required />
+        <div *ngIf="loginForm.controls['adminEmail'].invalid && loginForm.controls['adminEmail'].touched"
+          class="error-text">
+          <ng-container *ngIf="loginForm.controls['adminEmail'].errors?.['required']">Email is required.</ng-container>
+          <ng-container *ngIf="loginForm.controls['adminEmail'].errors?.['pattern']">Please enter a valid email
+            address.</ng-container>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">
+          <fa-icon class="password-icon" [icon]="passwordVisible ? faEye : faEyeSlash"
+            (click)="togglePasswordVisibility()"></fa-icon> Password
+        </label>
+        <input [type]="passwordVisible ? 'text' : 'password'" id="adminPassword" formControlName="adminPassword"
+          class="form-control" placeholder="Enter your password" required />
+        <div *ngIf="loginForm.controls['adminPassword'].invalid && loginForm.controls['adminPassword'].touched"
+          class="error-text">
+          <ng-container *ngIf="loginForm.controls['adminPassword'].errors?.['required']">Password is
+            required.</ng-container>
+          <ng-container *ngIf="loginForm.controls['adminPassword'].errors?.['pattern']">Minimum eight characters, at
+            least one uppercase letter, one lowercase letter, one number, and one special character.</ng-container>
+        </div>
+      </div>
+
+      <div class="form-group remember-me">
+        <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
+        <label for="rememberMe">Remember Me</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+
+      <div class="forgot-password-link">
+        <a href="/forgotpassword">Forgot Password?</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="background-image"></div>
